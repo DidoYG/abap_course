@@ -1,26 +1,24 @@
 CLASS zcl_dyg_abap_course_basics DEFINITION
   PUBLIC
   FINAL
-  CREATE PUBLIC .
+  CREATE PUBLIC.
 
   PUBLIC SECTION.
-
-    INTERFACES if_oo_adt_classrun.
     INTERFACES zif_abap_course_basics.
+    INTERFACES if_oo_adt_classrun.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
 
+
 CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
 
   METHOD if_oo_adt_classrun~main.
-
-    DATA(result) = zif_abap_course_basics~hello_world( 'Atanas' ).
-    out->write( result ).
-
+    out->write( 'HELLO WORLD' ).
   ENDMETHOD.
+
 
   METHOD zif_abap_course_basics~calculator.
   ENDMETHOD.
@@ -29,6 +27,7 @@ CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
   METHOD zif_abap_course_basics~date_parsing.
   ENDMETHOD.
 
+
   METHOD zif_abap_course_basics~fizz_buzz.
   ENDMETHOD.
 
@@ -36,11 +35,8 @@ CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
   METHOD zif_abap_course_basics~get_current_date_time.
   ENDMETHOD.
 
+
   METHOD zif_abap_course_basics~hello_world.
-
-    DATA(lv_user_id) = sy-uname.
-    rv_result = |Hello { iv_name }, your system user id { lv_user_id }.|.
-
   ENDMETHOD.
 
 
