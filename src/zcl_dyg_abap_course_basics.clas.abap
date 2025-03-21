@@ -19,7 +19,7 @@ CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
     DATA lv_name TYPE string.
     lv_name = 'SAP'.
 
-    out->write( |Hello { lv_name }| ).
+    out->write( |Hello World { lv_name }| ).
   ENDMETHOD.
 
 
