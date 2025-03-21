@@ -16,10 +16,7 @@ ENDCLASS.
 CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
 
   METHOD if_oo_adt_classrun~main.
-    DATA lv_name TYPE string.
-    lv_name = 'SAP'.
-
-    out->write( |Hello { lv_name }| ).
+    out->write( 'Hello' ).
   ENDMETHOD.
 
 
