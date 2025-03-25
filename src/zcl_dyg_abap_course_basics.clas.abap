@@ -16,7 +16,7 @@ ENDCLASS.
 CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
 
   METHOD if_oo_adt_classrun~main.  " main method for running the code
-    DATA lv_task_number VALUE 2.  " Enter a task number to run it
+    DATA lv_task_number VALUE 3.  " Enter a task number to run it
 
     " Checking the number, so that the corresponding task is run
     IF lv_task_number = 1.
@@ -45,6 +45,9 @@ CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
       ENDIF.
 
       out->write( lv_message ).
+
+    ELSEIF lv_task_number = 3.
+      out->write( zif_abap_course_basics~fizz_buzz( ) ).
 
     ELSE.
       out->write( 'Task not yet implemented!' ).
@@ -88,11 +91,33 @@ CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD zif_abap_course_basics~date_parsing.
+  METHOD zif_abap_course_basics~fizz_buzz.  " Task 3: fizz_buzz method implementation
+    DATA lv_message TYPE string VALUE ''.
+    DATA lv_index TYPE i VALUE 1.
+
+    WHILE lv_index <= 100.
+      IF ( lv_index MOD 3 = 0 ) AND ( lv_index MOD 5 = 0 ).
+        lv_message = lv_message && | FizzBuzz |.
+
+      ELSEIF ( lv_index MOD 3 = 0 ).
+        lv_message = lv_message && | Fizz |.
+
+      ELSEIF ( lv_index MOD 5 = 0 ).
+        lv_message = lv_message && | Buzz |.
+
+      ELSE.
+        lv_message = lv_message && | { lv_index } |.
+
+      ENDIF.
+
+      lv_index += 1.
+    ENDWHILE.
+
+    rv_result = lv_message.
   ENDMETHOD.
 
 
-  METHOD zif_abap_course_basics~fizz_buzz.
+  METHOD zif_abap_course_basics~date_parsing.
   ENDMETHOD.
 
 
