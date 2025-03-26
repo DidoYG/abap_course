@@ -16,7 +16,7 @@ ENDCLASS.
 CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
 
   METHOD if_oo_adt_classrun~main.  " main method for running the code
-    DATA lv_task_number VALUE 4.  " Enter a task number to run it
+    DATA lv_task_number VALUE 6.  " Enter a task number to run it
 
     " Checking the number, so that the corresponding task is run
     IF lv_task_number = 1.
@@ -51,6 +51,28 @@ CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
 
     ELSEIF lv_task_number = 4.
       out->write( zif_abap_course_basics~date_parsing( '26 March 2025' ) ).
+
+    ELSEIF lv_task_number = 5.
+      DATA: lv_word TYPE string VALUE 'ABCD',
+            lv_score TYPE i.
+
+     lv_score = zif_abap_course_basics~scrabble_score( lv_word ).
+
+     out->write( |The word "{ lv_word }" gives a score: { lv_score }| ).
+
+    ELSEIF lv_task_number = 6.
+      DATA: lv_ts_str TYPE string,
+            lv_date_str TYPE string,
+            lv_time_str TYPE string.
+
+      lv_ts_str = zif_abap_course_basics~get_current_date_time(  ).
+      lv_date_str = |Date: { lv_ts_str(4) }-{ lv_ts_str+4(2) }-{ lv_ts_str+6(2) }|.
+      lv_time_str = |Time: { lv_ts_str+8(2) }:{ lv_ts_str+10(2) }:{ lv_ts_str+12(2) } UTC|.
+
+      out->write( |Unformatted ->  { lv_ts_str }| ).
+      out->write( | | ).
+      out->write( |Formatted   ->  { lv_date_str }| ).
+      out->write( |                { lv_time_str }| ).
 
     ELSE.
       out->write( 'Task not yet implemented!' ).
@@ -114,6 +136,7 @@ CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
       ENDIF.
 
       lv_index += 1.
+
     ENDWHILE.
 
     rv_result = lv_message.
@@ -174,11 +197,42 @@ CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD zif_abap_course_basics~scrabble_score.
+  METHOD zif_abap_course_basics~scrabble_score.  " Task 5: scrabble_score method implementation
+    DATA: lv_result TYPE i,
+          lv_index TYPE i,
+          lv_char TYPE char1,
+          lv_word TYPE string,
+          lv_hex_value TYPE x.
+
+    FIELD-SYMBOLS: <fs_ascii> TYPE x.
+
+    lv_word = TO_UPPER( iv_word ).
+
+    WHILE lv_index < STRLEN( lv_word ).
+      lv_char = lv_word+lv_index(1).
+
+      ASSIGN lv_char TO <fs_ascii> CASTING.  " Casting char to hex value
+      lv_hex_value = <fs_ascii>.
+
+      lv_hex_value -= 64.  " By subtracting with a decimal the hex converts to a decimal
+
+      " Checking the letter positions form A to Z
+      IF lv_hex_value >= 1 AND lv_hex_value <= 26.
+        lv_result += lv_hex_value.
+
+      ENDIF.
+
+      lv_index += 1.
+
+    ENDWHILE.
+
+    rv_result = lv_result.
   ENDMETHOD.
 
 
-  METHOD zif_abap_course_basics~get_current_date_time.
+  METHOD zif_abap_course_basics~get_current_date_time.  " Task 6: get_current_date_time method implementation
+    GET TIME STAMP FIELD DATA(lv_timestamp).
+    rv_result = lv_timestamp.
   ENDMETHOD.
 
 
