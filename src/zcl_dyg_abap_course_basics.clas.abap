@@ -14,14 +14,31 @@ ENDCLASS.
 
 
 CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-  METHOD if_oo_adt_classrun~main.  " main method for running the code
-    DATA lv_task_number VALUE 6.  " Enter a task number to run it
+"                              Main Method                           "
 
-    " Checking the number, so that the corresponding task is run
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  METHOD if_oo_adt_classrun~main.
+
+    DATA(lv_task_number) = 8.  " Enter a number to run corresponding task
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+*                              Method 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
     IF lv_task_number = 1.
       out->write( zif_abap_course_basics~hello_world( 'Deyan' ) ).
 
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+*                              Method 2
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     ELSEIF lv_task_number = 2.
       DATA(lv_num1) = 2.
       DATA(lv_num2) = 3.
@@ -46,12 +63,33 @@ CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
 
       out->write( lv_message ).
 
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+*                              Method 3
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     ELSEIF lv_task_number = 3.
       out->write( zif_abap_course_basics~fizz_buzz( ) ).
 
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+*                              Method 4
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     ELSEIF lv_task_number = 4.
       out->write( zif_abap_course_basics~date_parsing( '26 March 2025' ) ).
 
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+*                              Method 5
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     ELSEIF lv_task_number = 5.
       DATA: lv_word TYPE string VALUE 'ABCD',
             lv_score TYPE i.
@@ -60,6 +98,13 @@ CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
 
      out->write( |The word "{ lv_word }" gives a score: { lv_score }| ).
 
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+*                              Method 6
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     ELSEIF lv_task_number = 6.
       DATA: lv_ts_str TYPE string,
             lv_date_str TYPE string,
@@ -74,14 +119,73 @@ CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
       out->write( |Formatted   ->  { lv_date_str }| ).
       out->write( |                { lv_time_str }| ).
 
-    ELSE.
-      out->write( 'Task not yet implemented!' ).
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+*                              Method 7
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    ELSEIF lv_task_number = 7.
+      DATA: lt_task7_1 TYPE zif_abap_course_basics~ltty_travel_id,
+            lt_task7_2 TYPE zif_abap_course_basics~ltty_travel_id,
+            lt_task7_3 TYPE zif_abap_course_basics~ltty_travel_id.
+
+      zif_abap_course_basics~internal_tables(
+        IMPORTING
+          et_travel_ids_task7_1 = lt_task7_1
+          et_travel_ids_task7_2 = lt_task7_2
+          et_travel_ids_task7_3 = lt_task7_3
+      ).
+
+      out->write( 'Filter 1: "agency_id = 070001" & "booking_fee = 20" & "currency_code = JPY"' ).
+      out->write( lt_task7_1 ).
+      out->write( | | ).
+      out->write( 'Filter 2: "total_price > 2000" & "currency_code = USD"' ).
+      out->write( lt_task7_2 ).
+      out->write( | | ).
+      out->write( 'Filter 3: Top 10 rows' ).
+      out->write( lt_task7_3 ).
+
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+*                              Method 8
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    ELSEIF lv_task_number = 8.
+      DATA: lt_task8_1 TYPE zif_abap_course_basics~ltty_travel_id,
+            lt_task8_2 TYPE zif_abap_course_basics~ltty_travel_id,
+            lt_task8_3 TYPE zif_abap_course_basics~ltty_travel_id.
+
+      zif_abap_course_basics~open_sql(
+        IMPORTING
+          et_travel_ids_task8_1 = lt_task8_1
+          et_travel_ids_task8_2 = lt_task8_2
+          et_travel_ids_task8_3 = lt_task8_3
+      ).
+
+      out->write( 'Filter 1: "agency_id = 070001" & "booking_fee = 20" & "currency_code = JPY"' ).
+      out->write( lt_task8_1 ).
+      out->write( | | ).
+      out->write( 'Filter 2: "total_price > 2000" & "currency_code = USD"' ).
+      out->write( lt_task8_2 ).
+      out->write( | | ).
+      out->write( 'Filter 3: Top 10 rows' ).
+      out->write( lt_task8_3 ).
 
     ENDIF.
   ENDMETHOD.
 
 
-  METHOD zif_abap_course_basics~hello_world.  " Task 1: hello_world method implementation
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"           Task 1: hello_world method implementation                "
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  METHOD zif_abap_course_basics~hello_world.
     DATA lv_message TYPE string.
 
     lv_message = |Hello { iv_name }, your system user ID is: { sy-uname }.|.
@@ -90,7 +194,13 @@ CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD zif_abap_course_basics~calculator.  " Task 2: calculator method implementation
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"           Task 2: calculator method implementation                 "
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  METHOD zif_abap_course_basics~calculator.
     DATA lv_answer TYPE i.
 
     IF iv_operator = '+'.
@@ -116,7 +226,13 @@ CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD zif_abap_course_basics~fizz_buzz.  " Task 3: fizz_buzz method implementation
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"           Task 3: fizz_buzz method implementation                  "
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  METHOD zif_abap_course_basics~fizz_buzz.
     DATA lv_message TYPE string VALUE ''.
     DATA lv_index TYPE i VALUE 1.
 
@@ -143,7 +259,13 @@ CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD zif_abap_course_basics~date_parsing.  " Task 4: date_parsing method implementation
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"           Task 4: date_parsing method implementation               "
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  METHOD zif_abap_course_basics~date_parsing.
     DATA: lv_day TYPE string,
           lv_month TYPE string,
           lv_year TYPE string,
@@ -197,14 +319,20 @@ CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD zif_abap_course_basics~scrabble_score.  " Task 5: scrabble_score method implementation
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"           Task 5: scrabble_score method implementation             "
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  METHOD zif_abap_course_basics~scrabble_score.
     DATA: lv_result TYPE i,
           lv_index TYPE i,
           lv_char TYPE char1,
           lv_word TYPE string,
           lv_hex_value TYPE x.
 
-    FIELD-SYMBOLS: <fs_ascii> TYPE x.
+    FIELD-SYMBOLS <fs_ascii> TYPE x.
 
     lv_word = TO_UPPER( iv_word ).
 
@@ -230,16 +358,126 @@ CLASS zcl_dyg_abap_course_basics IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD zif_abap_course_basics~get_current_date_time.  " Task 6: get_current_date_time method implementation
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"        Task 6: get_current_date_time method implementation         "
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  METHOD zif_abap_course_basics~get_current_date_time.
     GET TIME STAMP FIELD DATA(lv_timestamp).
     rv_result = lv_timestamp.
   ENDMETHOD.
 
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"           Task 7: internal_tables method implementation            "
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   METHOD zif_abap_course_basics~internal_tables.
+    DATA lt_ztravel_table TYPE STANDARD TABLE OF ZTRAVEL_DYG.
+
+    SELECT COUNT(*) FROM ZTRAVEL_DYG INTO @DATA(lv_count).
+
+    " 1: Populating the table 'ZTRAVEL_DYG' if empty.
+    IF lv_count = 0.
+      SELECT * FROM ZTRAVEL_DYG INTO TABLE @lt_ztravel_table.
+      DELETE ZTRAVEL_DYG FROM TABLE @lt_ztravel_table.
+      COMMIT WORK AND WAIT.
+      INSERT ZTRAVEL_DYG FROM (
+        SELECT FROM /dmo/travel
+        FIELDS uuid( )          AS travel_uuid,
+               travel_id        AS travel_id,
+               agency_id        AS agency_id,
+               customer_id      AS customer_id,
+               begin_date       AS begin_date,
+               end_date         AS end_date,
+               booking_fee      AS booking_fee,
+               total_price      AS total_price,
+               currency_code    AS currency_code,
+               description      AS description,
+               CASE status
+                 WHEN 'B' THEN  'A'  " ACCEPTED
+                 WHEN 'X'  THEN 'X'  " CANCELLED
+                 ELSE 'O'            " open
+               END              AS overall_status,
+               createdby        AS createdby,
+               createdat        AS createdat,
+               lastchangedby    AS last_changed_by,
+               lastchangedat    AS last_changed_at
+        ORDER BY travel_id
+      ).
+      COMMIT WORK AND WAIT.
+    ENDIF.
+
+    CLEAR lt_ztravel_table.
+
+    " 2: Reading the contents of the 'ZTRAVEL_DYG' table.
+    SELECT * FROM ZTRAVEL_DYG INTO TABLE @lt_ztravel_table.
+
+    " No SQL used
+    " 3: Exporting table 'et_travel_ids_task7_1' with the required information.
+    LOOP AT lt_ztravel_table INTO DATA(lv_data_1).
+      IF lv_data_1-agency_id = '070001' AND lv_data_1-booking_fee = 20 AND lv_data_1-currency_code = 'JPY'.
+        APPEND VALUE #( travel_id = lv_data_1-travel_id ) TO et_travel_ids_task7_1.
+      ENDIF.
+    ENDLOOP.
+
+    " 4: Exporting table 'et_travel_ids_task7_2' with the required information.
+    LOOP AT lt_ztravel_table INTO DATA(lv_data_2).
+      IF lv_data_2-total_price > 2000 AND lv_data_2-currency_code = 'USD'.
+        APPEND VALUE #( travel_id = lv_data_2-travel_id ) TO et_travel_ids_task7_2.
+      ENDIF.
+    ENDLOOP.
+
+    " 5: Deleting entries that are not in EURO.
+    DELETE lt_ztravel_table WHERE currency_code <> 'EUR'.
+
+    " Sorting the entries by cheapest price and earliest date.
+    SORT lt_ztravel_table BY total_price ASCENDING begin_date ASCENDING.
+
+    " 6: Exporting table 'et_travel_ids_task7_3' containing the first 10 rows of the sorted table 'lt_ztravel_table'.
+    DATA(lv_cycles) = 10.
+
+    " Adjusting the numbers of cycles, based on the numbers of rows in the table 'lt_ztravel_table'.
+    IF LINES( lt_ztravel_table ) < 10.
+      lv_cycles = LINES( lt_ztravel_table ).
+    ENDIF.
+
+    DO lv_cycles TIMES.
+      APPEND VALUE #( travel_id = lt_ztravel_table[ sy-index ]-travel_id ) TO et_travel_ids_task7_3.
+    ENDDO.
   ENDMETHOD.
 
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"              Task 8: open_sql method implementation                "
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   METHOD zif_abap_course_basics~open_sql.
+    " 1: Exporting table 'et_travel_ids_task8_1' with the required information.
+    SELECT travel_id
+    FROM ZTRAVEL_DYG
+    WHERE agency_id = '070001' AND booking_fee = 20 AND currency_code = 'JPY'
+    INTO TABLE @et_travel_ids_task8_1.
+
+    " 2: Exporting table 'et_travel_ids_task8_2' with the required information.
+    SELECT travel_id
+    FROM ZTRAVEL_DYG
+    WHERE total_price > 2000 AND currency_code = 'USD'
+    INTO TABLE @et_travel_ids_task8_2.
+
+    " 3: Exporting table 'et_travel_ids_task8_3' containing the first 10 rows.
+    SELECT travel_id
+    FROM ZTRAVEL_DYG
+    WHERE currency_code = 'EUR'
+    ORDER BY total_price ASCENDING, begin_date ASCENDING
+    INTO TABLE @et_travel_ids_task8_3
+    UP TO 10 ROWS.
+
   ENDMETHOD.
 ENDCLASS.
